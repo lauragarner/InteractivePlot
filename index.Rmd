@@ -1,0 +1,39 @@
+---
+title: "InteractivePlot"
+author: "Laura Garner"
+date: "11 May 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(plotly)
+library(dplyr)
+```
+
+## Data
+
+The data for this presentation has been sourced from the Open Data portal of the Queensland Government, Australia www.data.qld.gov.au 
+
+The specific dataset relates to factors involved in crashes on Queensland roads between 2001 and 2018, and the plot created focuses on crashes where a contributing factor was drink driving.
+
+```{r data}
+
+data<- read.csv("http://www.tmr.qld.gov.au/~/media/aboutus/corpinfo/Open%20data/crash/factorsinroadcrashes.csv")
+
+data<- data[data$Involving_Drink_Driving == "Yes",]
+dd<- data %>%
+        select(Crash_Year, Crash_Severity, Count_Crashes, Count_All_Casualties) %>%
+        group_by(Crash_Year, Crash_Severity) %>%
+        summarise(Crash = sum(Count_Crashes), Casualties = sum(Count_All_Casualties))
+```
+
+## Plot
+
+Plot showing the number of casualties involved in road crashes where drink driving was a causing factor.
+
+```{r plot}
+
+plot_ly(dd, x = dd$Crash_Year, y = dd$Casualties, color = dd$Crash_Severity, mode = "marker", type = 'scatter')
+```
+
