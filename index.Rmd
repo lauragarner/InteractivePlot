@@ -34,6 +34,6 @@ Plot showing the number of casualties involved in road crashes where drink drivi
 
 ```{r plot}
 
-plot_ly(dd, x = dd$Crash_Year, y = dd$Casualties, color = dd$Crash_Severity, mode = "marker", type = 'scatter')
+plot_ly(dd, x = dd$Crash_Year, y = dd$Casualties, z = dd$Crash, color = dd$Crash_Severity, mode = "marker", type = 'scatter3d')
 ```
 
